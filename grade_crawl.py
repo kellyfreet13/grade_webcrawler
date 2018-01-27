@@ -1,9 +1,9 @@
 from selenium import webdriver
 import time
 
-# eventually figure out how to safely store login data
+# eventually prompt user in window
 url = 'https://bbcsulb.desire2learn.com/d2l/login'
-chrome_path = 'C:/Users/Kelly/Desktop/webcrawler/chromedriver_win32/chromedriver'
+chrome_path = './chromedriver_win32/chromedriver'
 
 # get username and password
 sid = input('Enter your student id: ')
@@ -62,9 +62,3 @@ for name in class_names:
     print(name)
 
 browser.close()
-
-##########################################################
-# Organize with some functions then find the grade element
-# amongst all the navs at the top of bb such as content,
-# course home, etc.
-##########################################################
