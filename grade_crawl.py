@@ -1,13 +1,9 @@
 from selenium import webdriver
 import time
-import re
-
-NUM_CLASSES = 5
 
 # eventually figure out how to safely store login data
 url = 'https://bbcsulb.desire2learn.com/d2l/login'
 chrome_path = 'C:/Users/Kelly/Desktop/webcrawler/chromedriver_win32/chromedriver'
-
 
 # get username and password
 sid = input('Enter your student id: ')
@@ -17,7 +13,6 @@ pw = input('Enter your password: ')
 browser = webdriver.Chrome(chrome_path)
 browser.get(url)
 time.sleep(4)
-home_url = browser.current_url
 
 # get page data
 user = browser.find_element_by_id('userName')
@@ -31,35 +26,45 @@ time.sleep(2)
 sbmt.click()
 time.sleep(5)
 
-# go to view all courses
-view_all_courses = browser.find_element_by_id('viewAllCourses')
-view_all_courses.click()
-time.sleep(5)
-
 # get all a tags for my classes
 classes = browser.find_elements_by_xpath('//*[@id="d2l-course-tile-anchor"]')
-for i in range(NUM_CLASSES):
-    curr_url = browser.current_url
-    print('Current url: '+curr_url)
+print('Amount of classes: '+str(len(classes)))
 
-    class_href = classes[i].get_attribute('href')
+# get an array of href so there is no 'stale' element. The hrefs
+# will remain the same even though an element may be reloaded
+class_urls = []
+class_names = []
+for my_class in classes:
+    class_urls.append(my_class.get_attribute('href'))
 
     # get class name
-    class_name_short = classes[i].text.split(' ', 2)
-    print(class_name_short)
-    print(class_href)
+    class_name_split = my_class.text.split(' ', 2)
+    class_name_short = class_name_split[0] + ' ' + class_name_split[1]
+    class_names.append(class_name_short)
 
-    #################################################
-    # There is a problem where the browser doesn't
-    # recognize the element I got after clicking
-    # viewAllCourses. Figure out how to find the
-    # correct elements from the home page, I'm
-    # guessing this should fix the issue.
-    #################################################
+# navigate to each class
+for url in class_urls:
+    time.sleep(3)
+    browser.get(url)
+    time.sleep(3)
 
-    browser.get(class_href)
-    time.sleep(4)
-    browser.back()
-    print('after clicking back, url is: '+browser.current_url)
+    # navigate to grades for each page
+    nav_items = browser.find_elements_by_class_name('d2l-navigation-s-link')
+    for item in nav_items:
+        if item.text == 'Grades':
+            grade_url = item.get_property('href')
+
+    # navigate to the grades section
+    browser.get(grade_url)
+
+
+for name in class_names:
+    print(name)
 
 browser.close()
+
+##########################################################
+# Organize with some functions then find the grade element
+# amongst all the navs at the top of bb such as content,
+# course home, etc.
+##########################################################
