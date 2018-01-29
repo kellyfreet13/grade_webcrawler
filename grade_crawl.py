@@ -63,10 +63,3 @@ for name in class_names:
 
 # clean up
 browser.close()
-
-#####################################################################
-# Next steps in this project. Think about how to translate grade data
-# so it can be easily translated to a graph. Consider, CSV, some data
-# structure? Think about what would be best after looking at how to
-# implement the graphs.
-#####################################################################
