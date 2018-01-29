@@ -57,8 +57,16 @@ for url in class_urls:
     # navigate to the grades section
     browser.get(grade_url)
 
-
+# ensure all classes were found
 for name in class_names:
     print(name)
 
+# clean up
 browser.close()
+
+#####################################################################
+# Next steps in this project. Think about how to translate grade data
+# so it can be easily translated to a graph. Consider, CSV, some data
+# structure? Think about what would be best after looking at how to
+# implement the graphs.
+#####################################################################
