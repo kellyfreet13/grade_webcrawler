@@ -63,3 +63,11 @@ for name in class_names:
 
 # clean up
 browser.close()
+
+################################################################
+# Next step: graph visualization for grade data. Decide how to
+# best take data from website, and put into graphs. Perhaps
+# using some OO would be good (pythonics laugh at this), maybe
+# a csv file to read, or maybe some data structure. Will become
+# more clear once there is some grade data.
+################################################################
